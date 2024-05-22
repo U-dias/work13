@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-body">
+        <ul class="list-group">
+            <li class="list-group-item" style="border:none;">
+                <%= link_to "お部屋の概要", listing_room_path, class: "btn btn-light" %>
+                <span class="text-danger"><i class="fa-solid fa-check"></i></span>
+            </li>
+            <li class="list-group-item" style="border:none;">
+                <%= link_to "１泊の宿泊価格", pricing_room_path, class: "btn btn-light" %>
+                <% if !@room.r_price? %>
+                    <span class="text-danger"><i class="fa fa-check"></i></span>
+                <% end %>        
+            </li>
+            <li class="list-group-item" style="border:none;">
+                <%= link_to "お部屋の名前と説明", description_room_path, class: "btn btn-light" %>
+                    <% if !@room.r_name? %>
+                <span class="text-danger"><i class="fa fa-check"></i></span>
+                <% end %>
+            </li>
+            <li class="list-group-item" style="border:none;">
+                <%= link_to "写真アップロード", photo_upload_room_path, class: "btn btn-light" %>
+                <span class="text-danger"><i class="fa fa-check"></i></span>
+            </li>
+            <li class="list-group-item" style="border:none;">
+                <%= link_to "お部屋の住所", location_room_path, class: "btn btn-light" %>
+                <% if !@room.r_address.blank? %>
+                    <span class="text-danger"><i class="fa fa-check"></i></span>
+                <% end %>        
+            </li>
+        </ul>
+        <div class="mt-4">
+            <% is_ready = !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_address.blank? %>
+            <%= form_for @room do |f| %>
+            <%= f.hidden_field :acts_like, value: true %>
+            <%= f.submit "公開する", class: "btn btn-danger w-100", disabled: !is_ready %>
+            <% end %>
+        </div>
+    </div>
+</div>
