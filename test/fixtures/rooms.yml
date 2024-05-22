@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  r_name: MyString
+  r_photo: 
+  r-self: MyText
+  r_price: 
+  r_create: 2024-05-11
+  r_address: MyString
+  user: one
+
+two:
+  r_name: MyString
+  r_photo: 
+  r-self: MyText
+  r_price: 
+  r_create: 2024-05-11
+  r_address: MyString
+  user: two
