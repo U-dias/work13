@@ -13,6 +13,7 @@
                         <% end %>                                   
                     </div>                
                     <!-- アバター -->
+                    <%= image_tag @user.photo if @user.photo.attached? %>
                     <%= image_tag "/assets/default_icon.png", class: "img-fluid img-thumbnail rounded-pill" %>
                     <h4 class="text-center"><%= @user.full_name %></h4>   
                     

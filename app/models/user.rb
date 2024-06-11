@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_many :rooms
   
+  has_one_attached :photo
+  has_many :reservations
+
   validates :full_name, :email, presence: true, length: {maximum: 50}
 
   # Include default devise modules. Others available are:

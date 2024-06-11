@@ -49,6 +49,13 @@
                                 id: "r_address", class: "form-control" %>
                       </div>
                      </div>
+                     <div class="col-md-4">
+                     <div class="mb-2">
+                           <label>宿泊可能人数</label>
+                           <%= f.text_field :people,
+                               id: "people", class: "form-control" %>
+                     </div>
+                    </div>
                 </div>
                 <%= f.submit "登録する", class: "btn btn-danger w-100" %>        
             <% end %>

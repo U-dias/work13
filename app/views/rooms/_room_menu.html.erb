@@ -12,13 +12,19 @@
                 <% end %>        
             </li>
             <li class="list-group-item" style="border:none;">
+                <%= link_to "宿泊可能人数", people_room_path, class: "btn btn-light" %>
+                <% if !@room.people? %>
+                    <span class="text-danger"><i class="fa fa-check"></i></span>
+                <% end %>        
+            </li>
+            <li class="list-group-item" style="border:none;">
                 <%= link_to "お部屋の名前と説明", description_room_path, class: "btn btn-light" %>
                     <% if !@room.r_name? %>
                 <span class="text-danger"><i class="fa fa-check"></i></span>
                 <% end %>
             </li>
             <li class="list-group-item" style="border:none;">
-                <%= link_to "写真アップロード", photo_upload_room_path, class: "btn btn-light" %>
+                <%= link_to "写真アップロード", photo_upload_room_path, class: "btn btn-light", data: { turbolinks: false} %>
                 <span class="text-danger"><i class="fa fa-check"></i></span>
             </li>
             <li class="list-group-item" style="border:none;">
@@ -29,7 +35,7 @@
             </li>
         </ul>
         <div class="mt-4">
-            <% is_ready = !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_address.blank? %>
+            <% is_ready = !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_address.blank? && !@room.r_photo.blank? %>
             <%= form_for @room do |f| %>
             <%= f.hidden_field :acts_like, value: true %>
             <%= f.submit "公開する", class: "btn btn-danger w-100", disabled: !is_ready %>

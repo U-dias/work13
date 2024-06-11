@@ -59,3 +59,7 @@ gem 'sassc-rails'
 gem 'devise' 
 
 gem 'rails-i18n'
+
+gem 'pry-rails'
+
+gem 'jquery-ui-rails'

@@ -17,9 +17,13 @@ Rails.application.routes.draw do
       get 'photo_upload'
       get 'amenities'
       get 'location'
+      get 'people'
+      get 'preload'
+      get 'preview'
       delete :delete_photo
       post :upload_photo
     end
+    resources :reservations, only: [:create]
   end
 
   devise_for :users,

@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  
   def dashboard
   end
   def update
     @user = current_user
-     if @user.update(current_user_params)
+     if @user.update!(current_user_params)
       flash[:notice] = "保存しました"
      else
       flash[:alert] = "更新できません"
@@ -17,6 +18,6 @@ class UsersController < ApplicationController
 
   private
   def current_user_params
-    params.require(:user).permit(:self, :status)
+    params.require(:user).permit(:self, :status, :photo, :full_name)
   end
 end
