@@ -21,6 +21,12 @@ class RoomsController < ApplicationController
       render :new
     end
   end
+  
+  def show
+    @photos = @room.photos
+    @i = 0
+    @guest_reviews = @room.guest_reviews
+  end
 
   def listing
   end

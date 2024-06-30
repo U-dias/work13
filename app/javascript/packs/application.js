@@ -14,3 +14,5 @@ ActiveStorage.start()
 
 require("jquery")
 require("jquery-ui/ui/widgets/datepicker")
+
+require("raty-js")

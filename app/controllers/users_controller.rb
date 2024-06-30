@@ -2,6 +2,10 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   
   def dashboard
+    # ユーザーがホストの場合、ホストに対するすべてのゲストレビューを表示
+    @guest_reviews = Review.where(type: "GuestReview", host_id: current_user.id)
+    # ユーザーがゲストの場合、ユーザに対するすべてのホストレビューを表示
+    @host_reviews = Review.where(type: "HostReview", guest_id: current_user.id)
   end
   def update
     @user = current_user
@@ -14,7 +18,12 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
+    # ユーザーがホストの場合、ホストに対するすべてのゲストレビューを表示
+    @guest_reviews = Review.where(type: "GuestReview", host_id: @user.id)
+    # ユーザーがゲストの場合、ユーザに対するすべてのホストレビューを表示
+    @host_reviews = Review.where(type: "HostReview", guest_id: @user.id)
   end
+  
 
   private
   def current_user_params

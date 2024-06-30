@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
     
   before_action :authenticate_user!
+  before_action :set_reservation, only: [:approve]
 
   def create
     room = Room.find(params[:room_id])
@@ -22,9 +23,22 @@ class ReservationsController < ApplicationController
         end
         redirect_to room
     end
+    def your_trips
+      @trips = current_user.reservations.order(start_date: :asc)
+    end
+    def your_reservations
+      @rooms = current_user.rooms
+    end
+    def approve
+      @reservation.Approved!
+      redirect_to your_reservations_path
+    end
   
     private
     def reservation_params
         params.require(:reservation).permit(:start_date, :end_date.price, :total_p, :people)
+    end
+    def set_reservation
+      @reservation = Reservation.find(params[:id])
     end
   end

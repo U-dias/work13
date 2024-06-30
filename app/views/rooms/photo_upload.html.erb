@@ -11,20 +11,17 @@
                 <div class="card-body">
                 <h4 class="mt-4 mb-4"><b>写真アップロード</b></h4>
                 <!-- 写真アップロード -->
-                <div class="dropzone" id="myDropzone"  style="height: 200px; border: dashed 1px #333; border-radius: 10px; text-align: center; padding-top: 1rem;" action="/rooms/<%= @room.id %>/upload_photo"></div>
-                <div class="container">
-                 <div class="row">
-                  <% @room.photos.each do |photo| %>
-                    <div class="col-4">
-                     <div class="card mt-2">
-                      <%= image_tag url_for(photo), class:"card-img-top" %>
-                       <div class="card-body">               
-                        <p class="card-text">
-                         <%= button_to '削除', delete_photo_room_url(photo_id: photo.id, id: @room.id), method: :delete, data: { turbo: false }, form: { onSubmit: "return check()" }, style: "z-index: 100;", class: "btn btn-outline-danger btn-sm" %></p>
-                       </div>
-                    </div>
-                  </div>
-                  <% end %>
+                <%= image_tag user_url(current_user), :size => '200x200', class: "img-fluid img-thumbnail rounded-pill" %>
+                <h4 style="margin-left: 5.5rem;"></h4>
+
+                <div class="collapse" id="collapse1">
+                <div class="card card-body">
+                    <%= form_for :room, url: rooms_url(current_user), action: :update, method: :post do |f| %>
+                        <%= f.file_field :photos, class: "input-group-text", onchange: "this.form.submit();" %>
+                    <% end %>   
+                </div>
+
+
                  </div>
                  </div>
                 </div>      

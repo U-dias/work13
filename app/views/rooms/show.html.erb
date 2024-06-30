@@ -5,6 +5,45 @@
             <!-- 予約フォーム -->
             <%= render 'reservations/form' %>
         </div>
+        <div class="card">
+        <div class="card-body">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <% @photos.each do |photo| %>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= @i %>" class="<%= 'active' if photo.id == @photos[0].id %>" aria-current="true" aria-label="Slide <%= @i+1 %>"></button>
+                        <% @i = @i +1 %>
+                    <% end %>
+                </div>
+                <div class="carousel-inner">
+                    <% @photos.each do |photo| %>
+                        <div class="carousel-item <%= 'active' if photo.id == @photos[0].id %>">
+                            <%= image_tag url_for(photo), class: "d-block w-100", style: "border-radius: 10px;" %>
+                        </div>
+                    <% end %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-2 mt-2">
+        <div class="card-body">
+            <h2 class="mb-4 mt-4"><%= @room.listing_name %></h2>
+            <div class="fs-5"><%= @room.r_address %></div>
+            <div class="mt-4">
+            <%= link_to user_path(@room.user), style: "text-decoration:none;" do %>
+                <%= image_tag avatar_url(@room.user), class: "bd-placeholder-img figure-img img-fluid rounded-pill", style: "width: 40px; height: 30px;" %>
+                <span class="badge bg-light text-dark"><%= @room.user.full_name %></span>
+            <% end %>
+            </div>
+        </div>
+    </div>
 
             <!-- 部屋のインフォメーション -->
             <div class="card mb-2">
@@ -21,12 +60,65 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
+            <!-- アメニティ -->
+            <div class="card mt-2">
                 <div class="card-body">        
-                    <div class="badge bg-secondary mb-4">部屋の詳細</div>
-                    <p><%= @room.r_self %></p>
+                    <div class="badge bg-warning mb-4">レビュー(<%= @guest_reviews.count %>)</div>
+                    <!-- レンダー -->
+                    <%= render "reviews/guest_list" %>
+ 
                 </div>
-            </div>            
+            </div>
+            <!-- GOOGLE マップ -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    
+                    <div id="map" style="width: 100%; height: 400px"></div>
+                    <script src="https://maps.googleapis.com/maps/api/js"></script>
+                    <script>
+                        function initialize() {
+                            var location = {lat: <%= @room.latitude %>, lng: <%= @room.longitude %>};
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                            center: location,
+                            zoom: 14
+                            });
+                            var marker = new google.maps.Marker({
+                            position: location,
+                            map: map
+                            });
+                            var infoWindow = new google.maps.InfoWindow({
+                            content: '<div id="content"><%= image_tag room_cover(@room), style: "width: 100px;" %></div>'
+                            });
+                            infoWindow.open(map, marker);
+                        }
+                        google.maps.event.addDomListener(window, 'load', initialize);
+                    </script>
+                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDoAh6S8kEpArgzGFEvjT_0xK_VeUL5SEs&callback=initMap" type="text/javascript"></script>
+                </div>
+            </div>
+            <!-- 近くのお部屋を検索 -->
+            <div class="card mt-4 mb-4">
+                <div class="card-body">
+                    <h3 class="badge bg-secondary">近くの部屋</h3>
+                    <div class="row">
+                    <% for room in @room.nearbys(10) %>                    
+                        <div class="col-md-4">
+                        <div class="card mb-2">
+                        <div class="card-body">
+                        <%= link_to room_path(room), data: { turbolinks: false} do %>
+                                <%= image_tag room_cover(room), style: "width: 100%;" %>   
+                        <% end %>                 
+                            <div>
+                            <%= link_to room.listing_name, room, class: "btn btn-light" %>
+                            </div>
+                            <div class="badge bg-danger">距離：<%= room.distance.round(2) %> Km</div>
+                        </div>
+                        </div>
+                        </div>
+                    <% end %>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

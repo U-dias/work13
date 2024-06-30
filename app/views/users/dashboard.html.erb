@@ -12,12 +12,17 @@
                     <%= image_tag user_url(current_user), :size => '100x100', class: "img-fluid img-thumbnail rounded-pill" %>
                     <h4 style="margin-left: 5.5rem;"></h4>
 
+
+                    <button class="btn btn-info text-light w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>アバター画像アップロード
+                    </button>
                     <div class="collapse" id="collapse1">
                     <div class="card card-body">
                         <%= form_for :user, url: users_edit_url(current_user), action: :update, method: :post do |f| %>
                             <%= f.file_field :photo, class: "input-group-text", onchange: "this.form.submit();" %>
                         <% end %>   
                     </div>
+                    
                 </div>
                 <hr/>
 
