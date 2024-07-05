@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
-  devise_for :users,
-  path: '',
+  devise_for :users, 
+  path: '', 
   path_names: {sign_up: 'register', sign_in: 'login', edit: 'profile', sign_out: 'logout'},
   controllers: {registrations: 'registrations'}
 
@@ -33,6 +33,8 @@ Rails.application.routes.draw do
     end
     resources :reservations, only: [:create]
   end
+
+  get "search" => "searches#search"
 
   resources :guest_reviews, only: [:create, :destroy]
   resources :host_reviews, only: [:create, :destroy]

@@ -5,7 +5,7 @@
     <div class="card mt-4">
         <div class="card-body">
             <h4 class="mt-4 mb-4"><b>部屋の新規登録</b></h4>
-            <%= form_for @room do |f| %>
+            <%= form_for @room, multipart: true do |f| %>
                 <div class="row mb-4">            
                     <div class="col-md-4">
                         <div class="mb-2">
@@ -17,6 +17,20 @@
                     <div class="col-md-4">
                         <div class="mb-2">
                             <label>写真</label>
+                            <%= image_tag room_url(@room), :size => '150x100', class: "img-fluid img-thumbnail rounded-pill" %>
+                            <h4 style="margin-left: 5.5rem;"></h4>
+        
+        
+                            <button class="btn btn-info text-light w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>写真アップロード
+                            </button>
+                            <div class="collapse" id="collapse1">
+                            <div class="card card-body">
+                                <%= form_for :room, url: rooms_url(@room), action: :update, method: :post do |f| %>
+                                    <%= f.file_field :r_photo, class: "input-group-text", onchange: "this.form.submit();" %>
+                                <% end %>   
+                            </div>
+
                         </div>
                     </div>
                 </div>

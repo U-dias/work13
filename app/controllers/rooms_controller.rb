@@ -13,6 +13,7 @@ class RoomsController < ApplicationController
   end
 
   def create
+    binding.pry
     @room = current_user.rooms.build(room_params)
     if @room.save
       redirect_to listing_room_path(@room), notice: "保存完了"
@@ -95,7 +96,7 @@ class RoomsController < ApplicationController
   end
   
   def is_ready_room
-    !@room.acts_like? && !@room.price.blank? && !@room.listing_name.blank? && !@room.photos.blank? && !@room.address.blank? && !@room.people.blank?
+    !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_photo.blank? && !@room.r_address.blank? && !@room.people.blank?
   end
   def is_conflict(start_date, end_date, room)
     check = room.reservations.where("? < start_date AND end_date < ?", start_date, end_date)

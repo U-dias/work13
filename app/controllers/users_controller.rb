@@ -1,6 +1,20 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   
+  def new
+    @user = User.new
+  end
+  
+  def create
+    @user = current_user.users.build(user_params)
+    if @user.save
+      redirect_to user_path(@user), notice: "保存完了"
+    else
+      flash[:alert] = "問題"
+      render :new
+    end
+  end
+    
   def dashboard
     # ユーザーがホストの場合、ホストに対するすべてのゲストレビューを表示
     @guest_reviews = Review.where(type: "GuestReview", host_id: current_user.id)

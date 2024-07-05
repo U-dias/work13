@@ -7,4 +7,13 @@ module ApplicationHelper
     end
 
   end
+
+  def room_url(room)
+    if room.r_photo.attached?
+      url_for(room.r_photo)
+    else
+      ActionController::Base.helpers.asset_path('default_room.png')
+    end
+
+  end
 end
