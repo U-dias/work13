@@ -6,4 +6,13 @@ class Reservation < ApplicationRecord
 
   has_many :reviews
 
+  validates message:"can not reserve"
+  if: :date_in_future
+
+  private
+   def date_in_future
+    end_date > start_date
+   end
+
+
 end

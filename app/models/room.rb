@@ -1,7 +1,7 @@
 class Room < ApplicationRecord
   belongs_to :user
 
-  has_many_attached :r_photo
+  has_one_attached :r_photo
   has_many :reservations
   has_many :guest_reviews
   has_many :reviews

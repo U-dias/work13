@@ -4,13 +4,13 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
+
   def create
     @user = current_user.users.build(user_params)
     if @user.save
       redirect_to user_path(@user), notice: "保存完了"
     else
-      flash[:alert] = "問題"
+      flash[:alert] = "問題発生"
       render :new
     end
   end

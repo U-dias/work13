@@ -13,8 +13,7 @@ class RoomsController < ApplicationController
   end
 
   def create
-    binding.pry
-    @room = current_user.rooms.build(room_params)
+    @room = current_user.rooms.build
     if @room.save
       redirect_to listing_room_path(@room), notice: "保存完了"
     else
@@ -54,7 +53,7 @@ class RoomsController < ApplicationController
     new_params = room_params
     new_params = room_params.merge(active: true) if is_ready_room
 
-    if @room.update(new_params)
+    if @room.update(room_params)
       flash[:notice] = "保存完了"
     else
       flash[:alert] = "問題発生"
@@ -63,7 +62,7 @@ class RoomsController < ApplicationController
   end
 
   def upload_photo
-    @room.photos.attach(params[:file])
+    @room.r_photo.attach(room_params)
     render json: { success: true }
   end
   def delete_photo

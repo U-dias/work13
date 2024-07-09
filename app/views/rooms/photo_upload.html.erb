@@ -11,6 +11,10 @@
                 <div class="card-body">
                 <h4 class="mt-4 mb-4"><b>写真アップロード</b></h4>
                 <!-- 写真アップロード -->      
+                <%= form_with model: @room, local: true do |f| %>
+                 <%= form.file_field :r_photo, multiple: true %>
+                 <%= form.submit %>
+                <% end %>
                 </div>
             </div>
         </div>
