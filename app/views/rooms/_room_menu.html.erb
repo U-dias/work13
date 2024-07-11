@@ -35,7 +35,7 @@
             </li>
         </ul>
         <div class="mt-4">
-            <% is_ready = !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_address.blank? && !@room.r_photo.blank? %>
+            <% is_ready = !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_address.blank? %>
             <%= form_for @room do |f| %>
             <%= f.hidden_field :acts_like, value: true %>
             <%= f.submit "公開する", class: "btn btn-danger w-100", disabled: !is_ready %>

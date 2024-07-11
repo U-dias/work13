@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = current_user.rooms.build(room_params)
+    @room = current_user.rooms.build
     if @room.save
       redirect_to listing_room_path(@room), notice: "保存完了"
     else
@@ -62,7 +62,7 @@ class RoomsController < ApplicationController
   end
 
   def upload_photo
-    @room.r_photo.attach(room_params)
+    @room.photo.attach(room_params)
     render json: { success: true }
   end
   def delete_photo
@@ -88,14 +88,14 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
   end
   def room_params
-    params.require(:room).permit(:r_name, :r_photo, :r_self, :r_price, :r_create, :r_address, :people)
+    params.require(:room).permit(:r_name, :r_self, :r_price, :r_create, :r_address, :people)
   end
   def is_authorised
     redirect_to root_path, alert: "権限がありません。" unless current_user.id == @room.user_id
   end
   
   def is_ready_room
-    !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_photo.blank? && !@room.r_address.blank? && !@room.people.blank?
+    !@room.r_price.blank? && !@room.r_name.blank? && !@room.r_address.blank? && !@room.people.blank?
   end
   def is_conflict(start_date, end_date, room)
     check = room.reservations.where("? < start_date AND end_date < ?", start_date, end_date)
