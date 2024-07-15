@@ -26,9 +26,11 @@
                             </button>
                             <div class="collapse" id="collapse1">
                             <div class="card card-body">
-                            <%= form_with model: @room, local: true do |form| %>
-                                <%= form.file_field :photos %>
+                            <%= form_for :rooms, url: rooms_url(current_user), action: :update, method: :post do |form|  %>
+                                <%= form.file_field :photos, class: "input-group-text", onchange: "this.form.submit();" %>
                                 <%= form.submit %>
+                                
+                                    
                                <% end %>
                             </div>
 
