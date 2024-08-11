@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :rooms
-  
+  belongs_to :rooms
+
   has_one_attached :photo
   has_many :reservations
   has_many :guest_reviews, class_name: "GuestReview", foreign_key: "guest_id"

@@ -3,9 +3,10 @@ class RoomsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   protect_from_forgery except: [:upload_photo]
   before_action :is_authorised, only: [:listing, :pricing, :description, :photo_upload, :amenities, :location, :update]
+  
 
   def index
-    @rooms = Room.all
+    @rooms = current_user.rooms
   end
 
   def new
