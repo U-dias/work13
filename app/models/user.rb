@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :rooms
-  belongs_to :rooms
+
 
   has_one_attached :photo
   has_many :reservations

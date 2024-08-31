@@ -33,6 +33,7 @@ class UsersController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
+    @rooms = @User.rooms
     # ユーザーがホストの場合、ホストに対するすべてのゲストレビューを表示
     @guest_reviews = Review.where(type: "GuestReview", host_id: @user.id)
     # ユーザーがゲストの場合、ユーザに対するすべてのホストレビューを表示

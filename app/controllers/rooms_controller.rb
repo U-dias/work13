@@ -1,12 +1,10 @@
 class RoomsController < ApplicationController
-  before_action :set_room, except: [:index, :new, :create]
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!
   protect_from_forgery except: [:upload_photo]
-  before_action :is_authorised, only: [:listing, :pricing, :description, :photo_upload, :amenities, :location, :update]
-  
+
 
   def index
-    @rooms = current_user.rooms
+    @rooms = Room.all
   end
 
   def new
@@ -14,6 +12,15 @@ class RoomsController < ApplicationController
   end
 
   def create
+    # @room = Room.new(params.require(:room).permit(:user_id))
+    #  if @room.save
+    #   flash[:notice] = "saved!"
+    #   redirect_to :users
+    #  else
+    #   @user = User.find_by(params[:room][:user_id])
+    #   render "users/dashboard"
+    #  end
+    binding.pry
     @room = current_user.rooms.build(room_params)
     if @room.save
       redirect_to listing_room_path(@room), notice: "保存完了"
@@ -54,10 +61,10 @@ class RoomsController < ApplicationController
     new_params = room_params
     new_params = room_params.merge(active: true) if is_ready_room
 
-    if @room.update(room_params)
-      flash[:notice] = "保存完了"
+    if @room.update(new_params)
+      flash[:notice] = "保存しました。"
     else
-      flash[:alert] = "問題発生"
+      flash[:alert] = "問題発生しました。"
     end
     redirect_back(fallback_location: request.referer)
   end
@@ -102,4 +109,5 @@ class RoomsController < ApplicationController
     check = room.reservations.where("? < start_date AND end_date < ?", start_date, end_date)
     check.size > 0? true : false
   end
+
 end

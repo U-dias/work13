@@ -7,7 +7,7 @@
             </li>
             <li class="list-group-item" style="border:none;">
                 <%= link_to "１泊の宿泊価格", pricing_room_path, class: "btn btn-light" %>
-                <% if !@room.r_price? %>
+                <% if !@room.r_price.blank? %>
                     <span class="text-danger"><i class="fa fa-check"></i></span>
                 <% end %>        
             </li>
@@ -19,7 +19,7 @@
             </li>
             <li class="list-group-item" style="border:none;">
                 <%= link_to "お部屋の名前と説明", description_room_path, class: "btn btn-light" %>
-                    <% if !@room.r_name? %>
+                    <% if !@room.r_name.blank? %>
                 <span class="text-danger"><i class="fa fa-check"></i></span>
                 <% end %>
             </li>
