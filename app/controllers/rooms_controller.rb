@@ -8,6 +8,7 @@ class RoomsController < ApplicationController
   end
 
   def new
+    binding.pry
     @room = current_user.rooms.build
   end
 
