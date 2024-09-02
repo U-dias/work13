@@ -1,0 +1,35 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal<%= reservation.id %>">
+<font style="font-size: 0.9rem;">レビュー</font>
+</button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal<%= reservation.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <%= form_for GuestReview.new do |f| %>
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><div id="stars<%= reservation.id %>"></div></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= f.text_area :review, class: "textarea", required: true, style: "width: 20rem; height: 10rem; margin-top: -1rem;" %>
+        <%= f.hidden_field :reservation_id, value: reservation.id %>
+        <%= f.hidden_field :room_id, value: reservation.room.id %>
+        <%= f.hidden_field :reservation_id, value: reservation.id %>
+        <%= f.hidden_field :host_id, value: reservation.room.user.id %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+        <%= f.submit "レビューを投稿する", class: "btn btn-warning" %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  $('#stars<%= reservation.id %>').raty({
+    path: '/assets',
+    scoreName: 'guest_review[stars]',
+    score: 1
+  });
+</script>

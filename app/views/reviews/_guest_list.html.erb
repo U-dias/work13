@@ -1,0 +1,31 @@
+<% @guest_reviews.each do |r| %>
+  <div style="border: solid 1px #c0c0c0; margin-bottom: 0.3rem; border-radius: 5px;">
+      <ul class="list-group list-group-horizontal">
+          <li class="list-group-item" style="border: none;">
+              <div class="font1"><%= r.guest.full_name %></div>
+              <figure class="figure">
+              <%= link_to user_path(r.guest), style: "text-decoration:none;" do %>
+                  <%= image_tag avatar_url(r.guest), style: "width: 40px;", class: "figure-img img-fluid rounded-pill" %>
+              <% end %>
+                  <div><i class="fa fa-star" style="color: gold;"></i></span><span><%= r.stars %></div>                
+              </figure>
+          </li>
+          <li class="list-group-item bn" style="width: 100%; border: none;">
+              <span><%= r.review %></span>
+              <span class="text-secondary" style="font-size: 0.7rem;"><%= time_ago_in_words(r.created_at) %></span>
+          </li>
+          <% if (user_signed_in?) %>
+              <% if current_user && current_user == r.guest %>
+              <li class="list-group-item bn">
+                  <div>
+                      <%= link_to r, method: :delete, data: {confirm: "コメントを削除してもよろしいですか？"} do %>
+                          <i class="fas fa-trash-alt" style="color: red;"></i>
+                      <% end %>
+                  </div>
+              </li>
+              <% end %>
+          <% end %>
+                  
+      </ul>
+  </div>
+<% end %>
